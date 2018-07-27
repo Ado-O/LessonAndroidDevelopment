@@ -6,15 +6,12 @@ import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_atv);
 
         //find view
-        mToolbar = findViewById(R.id.main_abl);
 
         //setup
         setupToolbar();
@@ -24,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
      * toolbar
      */
     private void setupToolbar() {
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("My Toolbar");
-        ;
+
     }
 }
