@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import com.example.user.lesson_android_development.util.ActivityUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
      * toolbar
      */
     private void setupToolbar() {
-
+        ActivityUtils.replaceFragmentInActivity(
+                getSupportFragmentManager(),
+                MainOneFragment.newInstance(),
+                R.id.container
+        );
     }
 }
