@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
      * toolbar
      */
     private void setupToolbar() {
-        ArrayList<Name> list = new ArrayList<Name>();
-        list.add(new Name("Line", "secondLine"));
-        list.add(new Name("Line", "secondLine"));
-        list.add(new Name("Line", "secondLine"));
-        list.add(new Name("Line", "secondLine"));
+
+        String imgLoad = "https://vacationidea.com/pix/img25Hy8R/articles/most-beautiful-places-in-the-world_f.jpg";
+
+        ArrayList<Image> list = new ArrayList<Image>();
+        list.add(new Image(imgLoad));
 
         mMainAdapter = new MainAdapter(getApplicationContext(), list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
