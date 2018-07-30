@@ -1,4 +1,4 @@
-package com.example.user.lesson_android_development;
+package com.example.user.lesson_android_development.data;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
@@ -19,7 +19,7 @@ public abstract class AppDatabase extends RoomDatabase{
      public static AppDatabase getInstance(Context context){
          synchronized (sLock){
              if(INSTANCE == null){
-                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "name.db").build();
+                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "name_table.db").build();
              }
              return INSTANCE;
          }

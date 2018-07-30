@@ -1,4 +1,4 @@
-package com.example.user.lesson_android_development;
+package com.example.user.lesson_android_development.data;
 
 import android.content.Context;
 
@@ -22,6 +22,15 @@ public class NameLocalDataSource {
         mNameDao =AppDatabase.getInstance(context).getNameDao();
     }
 
+    public void getDelete(){
+        mAppExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mNameDao.delete();
+            }
+        });
+    }
+
     public void insertName(final Name name) {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
@@ -36,9 +45,9 @@ public class NameLocalDataSource {
             @Override
             public void run() {
 
-                List<Name> name = mNameDao.getName();
+                List<Name> names = mNameDao.getName();
 
-                callback.onSuccess(name);
+                callback.onSuccess(names);
 
             }
         });
