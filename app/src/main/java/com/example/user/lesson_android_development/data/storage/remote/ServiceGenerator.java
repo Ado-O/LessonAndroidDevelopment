@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    private static final String sBaseUrl = "http://staging.api.mobile.diamondappgroup.com/";
+    private static final String sBaseUrl = "this line add URL";
 
 
     private static final boolean mLoggingEnabled = true;
