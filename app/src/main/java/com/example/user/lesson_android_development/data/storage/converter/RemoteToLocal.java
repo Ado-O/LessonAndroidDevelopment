@@ -14,7 +14,7 @@ public class RemoteToLocal {
 
         for(ExerciseResponse e : exerciseResponses){
             exercises.add(
-                    new Exercise(e.getName(), e.getMusclesInvolved(), e.getThumbnail())
+                    new Exercise(e.getName(), e.getThumbnail())
             );
         }
         return exercises;
