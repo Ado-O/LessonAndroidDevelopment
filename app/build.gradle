@@ -16,12 +16,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //Android dependencies
     api "com.android.support:design:$android_support_version"
+    compile "com.android.support:customtabs:$android_support_version"
     implementation "com.android.support:appcompat-v7:$android_support_version"
     implementation "com.android.support:support-v4:$android_support_version"
 
@@ -50,4 +54,7 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "com.android.support.test:runner:$android_support_test_version"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
+
+    //facebook
+    implementation 'com.facebook.android:facebook-login:[4,5)'
 }
