@@ -1,79 +1,50 @@
 package com.example.user.lesson_android_development.main;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 
-import com.example.user.lesson_android_development.Injection;
 import com.example.user.lesson_android_development.R;
-import com.example.user.lesson_android_development.data.Exercise;
-import com.example.user.lesson_android_development.data.Workout;
-import com.example.user.lesson_android_development.data.storage.ContentRepository;
-import com.example.user.lesson_android_development.data.storage.ExerciseRepository;
-import com.example.user.lesson_android_development.data.storage.WorkoutRepository;
 
-import java.util.List;
+import java.util.ArrayList;
 
-/**
- * 1.) Get the content from server & insert it to the local db
- * 2.) Get the exercise count from the local database
- */
+
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-
-    private ContentRepository mContentRepository;
-
-    private ExerciseRepository mExerciseRepository;
-
-    private WorkoutRepository mWorkoutRepository;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_atv);
+        setContentView(R.layout.main_act);
 
-        /**
-         * i this line of code we get all content from local db wich we have becom from networking
-         */
-        mContentRepository = Injection.provideContentRepository(this);
-        mContentRepository.getContent();
+        mToolbar = findViewById(R.id.toolbar);
 
-        /**
-         * i this line of code we get data from exercise whic we have create object for this call
-         */
-        mExerciseRepository = Injection.provideExerciseRepository(this);
-        mExerciseRepository.getExercises(
-                new ExerciseRepository.GetExerciseCallback() {
-                    @Override
-                    public void onSuccess(List<Exercise> exercises) {
-                        Log.e(TAG, String.valueOf(exercises.size()));
-                    }
+        setupToolbar();
+    }
 
-                    @Override
-                    public void onError() {
+    /**
+     * Setting up the toolbar, toolbar actions & title
+     */
+    private void setupToolbar() {
+        //toolbar setup
+        setSupportActionBar(mToolbar);
+        //setting the toolbar title
+        getSupportActionBar().setTitle("Shop");
+        //  getSupportActionBar().setHomeAsUpIndicator(R.drawable.clear_white);
+        //setting up the back button on the toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
 
-                    }
-                });
-
-        /**
-         * i this line of code we get data from workout which we have create object for this call
-         */
-        mWorkoutRepository = Injection.provideWorkoutRepository(this);
-        mWorkoutRepository.getWorkout(
-                new WorkoutRepository.GetWorkoutsCallback() {
-                    @Override
-                    public void onSuccess(List<Workout> workouts) {
-                        Log.e(TAG, String.valueOf(workouts.get(0).getName()));
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                }
-        );
-
+    /**
+     * OnClickListener for the toolbar back button
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
 
