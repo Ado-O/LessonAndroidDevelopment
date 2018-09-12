@@ -1,80 +1,91 @@
 package com.example.user.lesson_android_development.main;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
-import com.example.user.lesson_android_development.Injection;
 import com.example.user.lesson_android_development.R;
-import com.example.user.lesson_android_development.data.Exercise;
-import com.example.user.lesson_android_development.data.Workout;
-import com.example.user.lesson_android_development.data.storage.ContentRepository;
-import com.example.user.lesson_android_development.data.storage.ExerciseRepository;
-import com.example.user.lesson_android_development.data.storage.WorkoutRepository;
 
-import java.util.List;
-
-/**
- * 1.) Get the content from server & insert it to the local db
- * 2.) Get the exercise count from the local database
- */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private ContentRepository mContentRepository;
-
-    private ExerciseRepository mExerciseRepository;
-
-    private WorkoutRepository mWorkoutRepository;
+    private BottomSheetBehavior mBottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_atv);
 
-        /**
-         * i this line of code we get all content from local db wich we have becom from networking
-         */
-        mContentRepository = Injection.provideContentRepository(this);
-        mContentRepository.getContent();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        /**
-         * i this line of code we get data from exercise whic we have create object for this call
-         */
-        mExerciseRepository = Injection.provideExerciseRepository(this);
-        mExerciseRepository.getExercises(
-                new ExerciseRepository.GetExerciseCallback() {
-                    @Override
-                    public void onSuccess(List<Exercise> exercises) {
-                        Log.e(TAG, String.valueOf(exercises.size()));
-                    }
+        //Find bottom Sheet ID
+        View bottomSheet = findViewById(R.id.bottom_sheet);
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
-                    @Override
-                    public void onError() {
+        //By default set BottomSheet Behavior as Collapsed and Height 0
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mBottomSheetBehavior.setPeekHeight(0);
 
-                    }
-                });
-
-        /**
-         * i this line of code we get data from workout which we have create object for this call
-         */
-        mWorkoutRepository = Injection.provideWorkoutRepository(this);
-        mWorkoutRepository.getWorkout(
-                new WorkoutRepository.GetWorkoutsCallback() {
-                    @Override
-                    public void onSuccess(List<Workout> workouts) {
-                        Log.e(TAG, String.valueOf(workouts.get(0).getName()));
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
+        //If you want to handle callback of Sheet Behavior you can use below code
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Log.d(TAG, "State Collapsed");
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Log.d(TAG, "State Dragging");
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Log.d(TAG, "State Expanded");
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Log.d(TAG, "State Hidden");
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Log.d(TAG, "State Settling");
+                        break;
                 }
-        );
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
+
+        //Implement click listeners
+        findViewById(R.id.bottom_sheet_dialog).setOnClickListener(this);
+        findViewById(R.id.bottom_sheet_dialog_fragment).setOnClickListener(this);
 
     }
-}
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bottom_sheet_dialog:
+                //Check the current state of bottom sheet
+                if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
+                    //If state is in collapse mode expand it
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                else
+                    //else if state is expanded collapse it
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                break;
+            case R.id.bottom_sheet_dialog_fragment:
+                //Show the Bottom Sheet Fragment
+                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetFragment();
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+                break;
+        }
+    }
+}
 
