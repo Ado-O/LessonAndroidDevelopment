@@ -2,48 +2,54 @@ package com.example.user.lesson_android_development.main;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.user.lesson_android_development.R;
+import com.example.user.lesson_android_development.databinding.FragmentBottomSheetBinding;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
-    //Bottom Sheet Callback
-    private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
+    private FragmentBottomSheetBinding mFragmentBottomSheetBinding;
 
-        @Override
-        public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                dismiss();
-            }
-
-        }
-
-        @Override
-        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-        }
-    };
-
-    @SuppressLint("RestrictedApi")
+    @Nullable
     @Override
-    public void setupDialog(Dialog dialog, int style) {
-        super.setupDialog(dialog, style);
-        //Get the content View
-        View contentView = View.inflate(getContext(), R.layout.fragment_bottom_sheet, null);
-        dialog.setContentView(contentView);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mFragmentBottomSheetBinding = FragmentBottomSheetBinding.inflate(inflater, container, false);
 
-        //Set the coordinator layout behavior
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
-        CoordinatorLayout.Behavior behavior = params.getBehavior();
+//        mFragmentBottomSheetBinding.btGoPro.setOnClickListener(view -> {
+//            LinkUtils.openLink(getContext(), getString(R.string.appLink_pro));
+//        });
 
-        //Set callback
-        if (behavior != null && behavior instanceof BottomSheetBehavior) {
-            ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
-        }
+        return mFragmentBottomSheetBinding.getRoot();
     }
 
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+
+        dialog.setOnShowListener(dialogInterface -> {
+            BottomSheetDialog d = (BottomSheetDialog) dialogInterface;
+
+            FrameLayout bottomSheet = (FrameLayout) d.findViewById(android.support.design.R.id.design_bottom_sheet);
+            BottomSheetBehavior bsb = BottomSheetBehavior
+                    .from(bottomSheet);
+
+            bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        });
+
+
+        return dialog;
+    }
 }
