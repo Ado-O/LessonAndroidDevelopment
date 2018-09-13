@@ -16,9 +16,6 @@ import com.example.user.lesson_android_development.databinding.FragmentBottomShe
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-
-    private BottomSheetBehavior mBottomSheetBehavior;
     private FragmentBottomSheetBinding mFragmentBottomSheetBinding;
 
     @Override
