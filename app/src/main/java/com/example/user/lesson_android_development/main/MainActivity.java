@@ -1,5 +1,6 @@
 package com.example.user.lesson_android_development.main;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -10,35 +11,32 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.user.lesson_android_development.R;
+import com.example.user.lesson_android_development.data.Item;
+import com.example.user.lesson_android_development.databinding.FragmentBottomSheetBinding;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private BottomSheetBehavior mBottomSheetBehavior;
+    private FragmentBottomSheetBinding mFragmentBottomSheetBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_atv);
 
+        mFragmentBottomSheetBinding = DataBindingUtil.setContentView(this, R.layout.fragment_bottom_sheet);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //Find bottom Sheet ID
-        View bottomSheet = findViewById(R.id.bottom_sheet);
-        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-
-//        //By default set BottomSheet Behavior as Collapsed and Height 0
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        mBottomSheetBehavior.setPeekHeight(0);
-
     }
 
-    public void myFancyMethod(View view){
-      BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetFragment();
-       bottomSheetDialogFragment.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+    public void myFancyMethod(View view) {
 
+
+       BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetFragment();
+       bottomSheetDialogFragment.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
 
 
     }

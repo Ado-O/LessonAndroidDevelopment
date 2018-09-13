@@ -2,6 +2,7 @@ package com.example.user.lesson_android_development.main;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.example.user.lesson_android_development.R;
+import com.example.user.lesson_android_development.data.Item;
 import com.example.user.lesson_android_development.databinding.FragmentBottomSheetBinding;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
@@ -26,9 +28,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mFragmentBottomSheetBinding = FragmentBottomSheetBinding.inflate(inflater, container, false);
 
-//        mFragmentBottomSheetBinding.btGoPro.setOnClickListener(view -> {
-//            LinkUtils.openLink(getContext(), getString(R.string.appLink_pro));
-//        });
+
+        Item item = new Item("SImple data");
+        mFragmentBottomSheetBinding.setItem(item);
 
         return mFragmentBottomSheetBinding.getRoot();
     }
